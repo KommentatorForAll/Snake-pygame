@@ -1,6 +1,13 @@
 import pygame
 
+"""
+Hosts all assets required by the game.
+"""
+
 class Background(pygame.sprite.Sprite):
+    """
+    The background of the game. Created by tiling one image for each cell
+    """
 
     def __init__(self, scaled_image_tile, board_dim):
         super().__init__()
@@ -8,6 +15,9 @@ class Background(pygame.sprite.Sprite):
         self.update_board(board_dim)
 
     def update_board(self, board_dim):
+        """
+        redraws the background image for the new board dimension
+        """
         iw = self.orig_img.get_width()
         img = pygame.Surface((iw*board_dim[0], iw*board_dim[1]))
         for x in range(board_dim[0]):
@@ -17,6 +27,9 @@ class Background(pygame.sprite.Sprite):
         self.rect = img.get_rect()
 
 class Apple(pygame.sprite.Sprite):
+    """
+    The apple, the snake has to eat.
+    """
 
     def __init__(self, img, px_size):
         super().__init__()
@@ -30,6 +43,10 @@ class Apple(pygame.sprite.Sprite):
 
 
 class Snake(pygame.sprite.Sprite):
+    """
+    The main snake head.
+    Processing is done externally
+    """
 
     def __init__(self, img, px_size, snakegame):
         super().__init__()
@@ -41,15 +58,15 @@ class Snake(pygame.sprite.Sprite):
         self.snakegame = snakegame
         self.length = 3
 
-    def update(self):
-        pass
-
     def set_dir(self, dir):
         self.dir = dir
         self.image = pygame.transform.rotate(self.orig_img, dir*90)
 
 
 class SnakeTile(pygame.sprite.Sprite):
+    """
+    The snake body and tail. Kills itself after a certain amount of ticks (the snakes head length)
+    """
 
     def __init__(self, img, head):
         super().__init__()
